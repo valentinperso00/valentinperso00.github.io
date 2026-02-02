@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Une question pour toi...</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffe6e6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh; /* Prend toute la hauteur de l'écran */
+            margin: 0;
+            padding: 10px; /* Petit espace sur les bords pour mobile */
+            box-sizing: border-box;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px 20px; /* Moins de padding sur les côtés */
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            
+            /* RENDU RESPONSIVE ICI */
+            width: 90%; 
+            max-width: 500px; /* Ne dépasse pas 500px sur PC */
+            
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #d32f2f;
+            margin: 20px 0;
+            font-size: 1.8em; /* Taille de base */
+            line-height: 1.2;
+        }
+
+        .gif-container {
+            width: 100%;
+            max-width: 300px; /* Limite la taille du gif */
+            margin-bottom: 10px;
+            pointer-events: none;
+        }
+
+        .buttons {
+            display: flex;
+            flex-wrap: wrap; /* Permet aux boutons de passer à la ligne si besoin */
+            justify-content: center;
+            gap: 15px;
+            align-items: center;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap; /* Empêche le texte du bouton de se couper */
+            
+            /* Empêche le zoom double-tap sur mobile */
+            touch-action: manipulation; 
+        }
+
+        #yesBtn {
+            background-color: #4CAF50;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        #noBtn {
+            background-color: #f44336;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* AJUSTEMENTS POUR MOBILE (Écrans < 600px) */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.5em; /* Texte un peu plus petit sur téléphone */
+            }
+            
+            .container {
+                padding: 20px 15px;
+            }
+
+            .gif-container {
+                max-width: 100%; /* Le gif prend toute la largeur dispo */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="questionScreen">
+        
+        <div class="gif-container">
+            <div class="tenor-gif-embed" data-postid="2592649324383853718" data-share-method="host" data-aspect-ratio="1.05769" data-width="100%"></div>
+        </div>
+
+        <h1>Veux-tu être ma Valentine ?</h1>
+
+        <div class="buttons">
+            <button id="yesBtn" onclick="acceptLove()">Oui</button>
+            <button id="noBtn" onclick="makeYesBigger()">Non</button>
+        </div>
+    </div>
+
+    <div class="container hidden" id="successScreen">
+        
+        <div class="gif-container">
+            <div class="tenor-gif-embed" data-postid="17190130066099490270" data-share-method="host" data-aspect-ratio="1" data-width="100%"></div>
+        </div>
+
+        <h1>Je t'aime ! ❤️</h1>
+    </div>
+
+    <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+
+    <script>
+        let fontSize = 16; // Taille initiale un peu plus petite pour mobile
+        let paddingH = 25; // Padding Horizontal
+        let paddingV = 12; // Padding Vertical
+
+        function makeYesBigger() {
+            const yesBtn = document.getElementById('yesBtn');
+            const noBtn = document.getElementById('noBtn');
+
+            // Augmente la taille progressivement
+            // Sur mobile, on augmente moins vite pour pas casser l'écran trop vite
+            fontSize += 10; 
+            paddingV += 5;
+            paddingH += 10;
+
+            yesBtn.style.fontSize = fontSize + 'px';
+            yesBtn.style.padding = paddingV + 'px ' + paddingH + 'px';
+
+            // Phrases drôles pour le bouton Non
+            const phrases = [
+                "Tu es sûre ?", 
+                "Vraiment ?", 
+                "Réfléchis bien !", 
+                "Dernière chance !", 
+                "Allez...", 
+                "S'il te plaîîît !",
+                "Tu me brises le cœur 💔",
+                "Ne fais pas ça !"
+            ];
+            const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+            noBtn.innerText = randomPhrase;
+        }
+
+        function acceptLove() {
+            document.getElementById('questionScreen').classList.add('hidden');
+            document.getElementById('successScreen').classList.remove('hidden');
+        }
+    </script>
+
+</body>
+</html>
